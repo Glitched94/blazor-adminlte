@@ -18,13 +18,15 @@
     [Parameter]
     public string Link { get; set; } = "javascript:void(0)";
     [Parameter]
+    public bool Reload { get; set; } = false;
+    [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     private SideBarState State => GetState<SideBarState>();
 
     private void Click()
     {
-        nav.NavigateTo(Link);
+        nav.NavigateTo(Link, Reload);
         JS.InvokeVoidAsync("toggleAside");
     }
 
