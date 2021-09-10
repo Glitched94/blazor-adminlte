@@ -5,7 +5,7 @@
 @inherits BlazorState.BlazorStateComponent
 <!-- Sidebar Menu -->
 <nav class="mt-2">
-    <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
+    <ul class="@Classes" role="menu">
         @ChildContent
     </ul>
 </nav>
@@ -14,9 +14,38 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
+    [Parameter]
+    public bool NavFlatStyle { get; set; } = false;
+
+    [Parameter]
+    public bool NavLegacyStyle { get; set; } = false;
+
+    [Parameter]
+    public bool NavCompact { get; set; } = false;
+
+    [Parameter]
+    public bool NavChildIndent { get; set; } = false;
+
+    [Parameter]
+    public bool NavChildHideOnCollapse { get; set; } = false;
+
+    private string Classes = "nav nav-pills nav-sidebar flex-column";
+
     protected override void OnInitialized()
     {
         nav.LocationChanged += LocationChanged;
+
+        if (NavFlatStyle) 
+            Classes += " nav-flat";
+        if (NavLegacyStyle)
+            Classes += " nav-legacy";
+        if (NavCompact)
+            Classes += " nav-compact";
+        if (NavChildIndent)
+            Classes += " nav-child-indent";
+        if (NavChildHideOnCollapse)
+            Classes += " nav-collapse-hide-child";
+
         base.OnInitialized();
     }
     void LocationChanged(object sender, LocationChangedEventArgs e)
